@@ -1,4 +1,4 @@
-var App = new function () {
+var app = new function () {
     console.log("Instaciando app");
     this.el = document.getElementById("users");
     this.usuarios = ['João', 'Ze', 'Maria'];
@@ -15,15 +15,36 @@ var App = new function () {
         }
     };
     this.listaTodos = function () {
-        var info = '';
+        var dados = '';
         if (this.usuarios.length > 0) {
-            for (i = 0; this.usuarios.length; i++) {
-                info += '<tr>';
-                info += '<td>' + this.usuarios[i] + '</td>';
-                info += '<tr>';
+            for (i = 0; i < this.usuarios.length; i++) {
+                dados += '<tr>';
+                dados += '<td>' + this.usuarios[i] + '</td>';
+                dados += '<td><input type="button" onclick="app.excluir(' + i + ')" value="Remover"/></td>';
+                dados += '<td><input type="button" onclick="app.editar(' + i + ')" value="Editar"/></td>';
+                dados += '</tr>';
             }
         }
         this.contar(this.usuarios.length);
-        return this.el.innerHTML = data;
+        return this.el.innerHTML = dados;
+    };
+    this.addNome = function () {
+        var nome = document.getElementById("nome").value;
+        if (nome)
+            this.usuarios.push(nome);
+        this.listaTodos();
+    };
+    this.excluir = function (item) {
+        this.usuarios.splice(item, 1);
+        this.listaTodos();
+    };
+    this.editar = function (item) {
+        var nome = this.usuarios[item];
+        var elNome = document.getElementById("nome");
+        if (item < this.usuarios.length) {
+            elNome.value = nome;
+        } else {
+            console.log("erro");
+        }
     }
-}
+};
